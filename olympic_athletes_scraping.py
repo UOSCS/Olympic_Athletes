@@ -2,14 +2,15 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 
-# csv파일 열기
+# Open csv file
 f = open('kolympic_data.csv', 'w', encoding='utf-8', newline='')
 wr = csv.writer(f)
 
-# 컬럼명
+# Column name
 wr.writerow(['name', 'sex', 'born', 'height', 'weight', 'team', 'noc', 'games', 'year', 'season', 'city', 'sport', 'event', 'medal', 'athlete_id'])
 
-# 1. 나라 목록 가져오기
+# 1. Get country list
+# [[country_noc, country_url], ... ]
 base_url = 'http://www.olympedia.org'
 countries_page = requests.get(base_url + '/countries')
 countries_soup = BeautifulSoup(countries_page.content, 'html.parser')
@@ -22,7 +23,8 @@ for i in range(len(country_urls)):
     if isCompeted[i][1] == 'glyphicon-ok':
         countries.append([country_nocs[i], country_urls[i]])
 
-# 0. (year + season) <-> City 딕셔너리 만들기
+# 2. Creating a dictionary to know the host city for the Olympics
+# {(year + season): City}
 games_page = requests.get(base_url + '/editions')
 games_soup = BeautifulSoup(games_page.content, 'html.parser')
 summer_table = games_soup.select_one('body > div.container > table:nth-child(5)')
@@ -39,30 +41,30 @@ years = summer_years + winter_years
 cities = summer_cities + winter_cities
 year_season__city = {years[i]: cities[i] for i in range(len(years))}
 
-# 테스트용
+# for testing
 # countries = countries[:2]
 
-# 2. 나라별로 순회
+# 3. Tour by country
 for idx, country in enumerate(countries):
-    # 1. 나라 안에 들어간다.
+    # 1. Enter the country
     country_page = requests.get(country[1])
 
-    # 2. 'Participations by edition'에서 참가 목록 가져온다.
+    # 2. Get the participation list from 'Participations by edition'
     country_soup = BeautifulSoup(country_page.content, 'html.parser')
     olympic_table = country_soup.select_one('body > div.container > table:nth-child(11)')
     if olympic_table is None:
         continue
     result_urls = [base_url + olympic['href'] for olympic in olympic_table.select('tbody > tr > td:nth-child(6) > a')]
 
-    # 3. 참가 목록 순회하면서 해당 국가의 모든 athlete_id 구하기
-    # 중복 없이 해당 나라의 모든 선수들을 긁어온 후 각 선수에 접근해야 한다.
-    # 선수 정보에는 그 선수가 올림픽에 출전했던 모든 기록이 있기 때문이다.
+    # 3. Finding all 'athlete_id's in the country while traversing the participation list
+    # Each player must be approached after scraping all players from the country without duplication.
+    # This is because the athlete information contains all the athletes' records in the Olympics.
     athlete_ids = {}
     for result_url in result_urls:
-        # 1. 참가 안에 들어간다.
+        # 1. Into the result page
         result_page = requests.get(result_url)
 
-        # 2. 선수 키값을 가져온다.
+        # 2. Get 'athlete_id' without duplicates from the result page
         result_soup = BeautifulSoup(result_page.content, 'html.parser')
         result_table = result_soup.select_one('table')
         local_athlete_ids = [int(athlete['href'][10:]) for athlete in result_table.select('tbody > tr > td:nth-child(2) > a')]
@@ -70,35 +72,39 @@ for idx, country in enumerate(countries):
             if athlete_ids.get(id) is None:
                 athlete_ids[id] = 1
 
-    # 4. athlete id로부터 athlete url 만들기
+    # 4. Create 'athlete_url' from 'athlete_id'
     athlete_urls = [base_url + '/athletes/' + str(id) for id in athlete_ids.keys()]
 
-    # 5. 선수 정보 가져오기
-    athlete_slice_start = len(base_url + '/athletes/')
+    # 5. Get athlete info
+    # Value to get 'athlete_id' from 'athelte_url' again using slicing
+    athlete_id_slice_start = len(base_url + '/athletes/')
     for athlete_url in athlete_urls:
-        # 1. 선수 안에 들어간다.
+        # 1. Into athlete page
         athlete_page = requests.get(athlete_url)
         athlete_soup = BeautifulSoup(athlete_page.content, 'html.parser')
 
-        # 2. 선수 관련 정보 가져온다.
-        # 선수 정보 키-밸류 딕셔너리 만들기
+        # 2. Creating a dictionary of athlete bio info
+        # {'NOC': 'Republic of Korea', 'Sex': 'Female', ... }
         key_items = athlete_soup.select('body > div.container > table.biodata > tr > th')
         keys = [item.get_text() for item in key_items]
         value_items = athlete_soup.select('body > div.container > table.biodata > tr > td')
         values = [item.get_text() for item in value_items]
         athlete_bio_info = {keys[i]: values[i] for i in range(len(keys))}
 
-        # 종목 정보 가져오기
+        # 3. Get games and disciplines info
+        # games = ['2018 Winter Olympics', ... ]
+        # disciplines = ['Short Track Speed Skating', '500 metres, Women', ... ]
+        # In the disciplines array, some values ​​are disciplines like 'Short Track Speed ​​Skating', and some values ​​are events like '500 meters, Women'.
         games_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(1)')
         games_s = [item.get_text() for item in games_items]
         discipline_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(2) > a:nth-child(1)')
         disciplines = [item.get_text() for item in discipline_items]
 
-        # 메달 정보 가져오기
+        # Get medal Info
         medal_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(5)')
         medals = [item.get_text() for item in medal_items]
 
-        # 선수정보 생성 & 삽입하기
+        # Create & insert athlete info
         cur_games = ''
         cur_sport = ''
         for i in range(len(games_s)):
@@ -111,8 +117,8 @@ for idx, country in enumerate(countries):
                 cur_sport = disciplines[i]
                 continue
 
-            # 선수 정보 생성하기
-            # 초기값
+            # Create athlete info
+            # Initial value
             name = None
             sex = None
             born = None
@@ -129,7 +135,7 @@ for idx, country in enumerate(countries):
             medal = None
             athlete_id = None
 
-            # 실제값
+            # Actual value
             name = athlete_soup.select_one('body > div.container > h1').get_text().replace('\n', '')
             sex_temp = athlete_bio_info.get('Sex')
             sex = 'M' if sex_temp == 'Male' else 'F' if sex_temp == 'Female' else None
@@ -158,14 +164,14 @@ for idx, country in enumerate(countries):
             sport = cur_sport
             event = disciplines[i]
             medal = None if medals[i] == '' else medals[i]
-            athlete_id = athlete_url[athlete_slice_start:]
+            athlete_id = athlete_url[athlete_id_slice_start:]
 
-            # 선수 정보 삽입하기
+            # Insert athlete info
             row = [name, sex, born, height, weight, team, noc, games, year, season, city, sport, event, medal, athlete_id]
             wr.writerow(row)
 
-# csv파일 닫기
+# Close csv file
 f.close()
 
-# 끝!
-print('끝!')
+# End!
+print('End!')
