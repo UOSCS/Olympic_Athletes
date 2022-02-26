@@ -41,7 +41,7 @@ years = summer_years + winter_years
 cities = summer_cities + winter_cities
 year_season__city = {years[i]: cities[i] for i in range(len(years))}
 
-# for testing
+# For testing
 # countries = countries[:2]
 
 # 3. Tour by country
@@ -100,11 +100,11 @@ for idx, country in enumerate(countries):
         discipline_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(2) > a:nth-child(1)')
         disciplines = [item.get_text() for item in discipline_items]
 
-        # Get medal Info
+        # 4. Get medal Info
         medal_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(5)')
         medals = [item.get_text() for item in medal_items]
 
-        # Create & insert athlete info
+        # 5. Create & insert athlete info
         cur_games = ''
         cur_sport = ''
         for i in range(len(games_s)):
@@ -117,7 +117,7 @@ for idx, country in enumerate(countries):
                 cur_sport = disciplines[i]
                 continue
 
-            # Create athlete info
+            # 1. Create athlete info
             # Initial value
             name = None
             sex = None
@@ -166,7 +166,7 @@ for idx, country in enumerate(countries):
             medal = None if medals[i] == '' else medals[i]
             athlete_id = athlete_url[athlete_id_slice_start:]
 
-            # Insert athlete info
+            # 2. Insert athlete info
             row = [name, sex, born, height, weight, team, noc, games, year, season, city, sport, event, medal, athlete_id]
             wr.writerow(row)
 
