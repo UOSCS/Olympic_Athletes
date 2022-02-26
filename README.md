@@ -34,4 +34,4 @@ This repository consists of a Python file that retrieves all athletes who partic
         5. Set the athlete information from the previously imported information and write it to the CSV file.
 
 ## Project
-We are creating [Kolympic](https://kolympic.com/), a website that visualizes Korea's Olympic records with the Olympic data collected in the above method and implements various high-level user scenarios related to the Olympics.
+We are creating [Kolympic](https://kolympic.com/), a website that visualizes Republic of Korea's Olympic records with the Olympic data collected in the above method and implements various high-level user scenarios related to the Olympics.
