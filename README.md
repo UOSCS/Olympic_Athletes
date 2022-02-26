@@ -1,5 +1,10 @@
 # Olympic_Athletes
 
+## Index
+1. [About the repository](#About-the-repository)
+2. [Description of the date scraping process](#Description-of-the-date-scraping-process)
+3. [Project](#Project)
+
 ## About the repository
 This repository consists of a Python file that retrieves all athletes who participated in the Olympics from [olympedia.org](http://www.olympedia.org/) and a CSV file that stores the data collected by the Python file.
 
@@ -27,3 +32,6 @@ This repository consists of a Python file that retrieves all athletes who partic
         4. Finally, we get the medal information from the 'Results' table.
         ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1lWXSX2Mqol9jwMa8rV-wznS1XS93wBQp)
         5. Set the athlete information from the previously imported information and write it to the CSV file.
+
+## Project
+We are creating [Kolympic](https://kolympic.com/), a website that visualizes Korea's Olympic records with the Olympic data collected in the above method and implements various high-level user scenarios related to the Olympics.
