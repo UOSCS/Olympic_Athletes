@@ -13,9 +13,9 @@ This repository consists of a Python file that retrieves all athletes who partic
 ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1lnHeAzstGe38yjvoWH17jIzYQymmrOZu)
 
 3. Now we are traversing by country and importing athlete.
-    1. Get all hrefs of a tag in the last column(Results) of 'Olympic Games' table of 'Participations by edition'.
+    1. Get all 'href's of 'a' tag in the last column(Results) of 'Olympic Games' table of 'Participations by edition'.
     ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1hxLoibKc9HgsivyN4cKcjbilJsxkLCN8)
-    2. If you click ‘Results’ to access it, you will see the athletes who participated in the relevant Olympics. Duplicate athlete names will appear if a competitor has competed in multiple events.
+    2. If you click ‘Results’ to access it, you will see the athletes who participated in the relevant Olympics. Duplicate athlete names will appear if an athlete has competed in multiple events.
     ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1ETDZrNl2-Aie9RKuhLqCgmC0P3SzEL0P)
     3. Now we create a non-duplicate 'athlete_id' set by looking at all records that a country has competed in past Olympics.
     4. Next, we start importing athlete information in earnest.
