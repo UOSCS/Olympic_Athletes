@@ -17,18 +17,18 @@ This repository consists of a Python file that retrieves all athletes who partic
 ![Olympic Games Summer](https://drive.google.com/uc?export=view&id=1nA5n0jaHgL7GYf1Y2TvZYVunFXWn0Z8Y)
 ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1lnHeAzstGe38yjvoWH17jIzYQymmrOZu)
 
-3. Now we are traversing by country and importing athlete.
+3. Now we are traversing by country and importing athlete information.
     1. Get all 'href's of 'a' tag in the last column(Results) of 'Olympic Games' table of 'Participations by edition'.
     ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1hxLoibKc9HgsivyN4cKcjbilJsxkLCN8)
     2. If you click ‘Results’ to access it, you will see the athletes who participated in the relevant Olympics. Duplicate athlete names will appear if an athlete has competed in multiple events.
     ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1ETDZrNl2-Aie9RKuhLqCgmC0P3SzEL0P)
-    3. Now we create a non-duplicate 'athlete_id' set by looking at all records(all 'Results') that a country has competed in past Olympics.
+    3. Now we create a non-duplicate 'athlete_id' set by looking at all records(all 'Results's) that a country has competed in past Olympics.
     4. Next, we start importing athlete information in earnest.
         1. Create an 'athelte_url' list from the 'athlete_id' set to access each athlete page.
         ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=15wyO4z4s7t1-kv-8JqrdlkCcfQs-pkrj)
         2. Access the player page, first collect the athlete's biographical information.
         ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1JxoaZKKk63l0xeA0lXn53eORABka-CG3)
-        3. Then, we import the Olympic, sport, and detailed event that the athlete participated in from the 'Results' table.
+        3. Then, we import the games, sport, and detailed event that the athlete participated in from the 'Results' table.
         4. Finally, we get the medal information from the 'Results' table.
         ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1lWXSX2Mqol9jwMa8rV-wznS1XS93wBQp)
         5. Set the athlete information from the previously imported information and write it to the CSV file.
