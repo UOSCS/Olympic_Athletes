@@ -2,7 +2,7 @@
 
 ## Index
 1. [About the repository](#About-the-repository)
-2. [Description of the date scraping process](#Description-of-the-data-scraping-process)
+2. [Description of the data scraping process](#Description-of-the-data-scraping-process)
 3. [Project](#Project)
 
 ## About the repository
