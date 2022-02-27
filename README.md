@@ -13,7 +13,7 @@ This repository consists of a Python file that retrieves all athletes who partic
 ![countries](https://drive.google.com/uc?export=view&id=123lYQUfNfYIe35YMWWqMj3Is9D8Bz4zh)
 
 
-2. Next, we create a Python dictionary data structure to know the host country from the host year and season later. The key of this dictionary is the concatenated Olympic year and season (e.g., 2018Winter), and the value is the host city.
+2. Next, we create a Python dictionary data structure to know the host city from the host year and season later. The key of this dictionary is the concatenated Olympic year and season (e.g., 2018Winter), and the value is the host city.
 ![Olympic Games Summer](https://drive.google.com/uc?export=view&id=1nA5n0jaHgL7GYf1Y2TvZYVunFXWn0Z8Y)
 ![Olympic Games Winter](https://drive.google.com/uc?export=view&id=1lnHeAzstGe38yjvoWH17jIzYQymmrOZu)
 
