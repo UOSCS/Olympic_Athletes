@@ -2,13 +2,13 @@
 
 ## Index
 1. [About the repository](#About-the-repository)
-2. [Description of the date scraping process](#Description-of-the-date-scraping-process)
+2. [Description of the date scraping process](#Description-of-the-data-scraping-process)
 3. [Project](#Project)
 
 ## About the repository
 This repository consists of a Python file that retrieves all athletes who participated in the Olympics from [olympedia.org](http://www.olympedia.org/) and a CSV file that stores the data collected by the Python file.
 
-## Description of the date scraping process
+## Description of the data scraping process
 1. First of all, we need to call up all the countries that have participated in the modern Olympics.
 ![countries](https://drive.google.com/uc?export=view&id=123lYQUfNfYIe35YMWWqMj3Is9D8Bz4zh)
 
