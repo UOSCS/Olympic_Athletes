@@ -3,7 +3,7 @@ import requests
 import csv
 
 # Open csv file
-f = open('kolympic_data.csv', 'w', encoding='utf-8', newline='')
+f = open('athletes_data.csv', 'w', encoding='utf-8', newline='')
 wr = csv.writer(f)
 
 # Column name
@@ -22,6 +22,8 @@ countries = []
 for i in range(len(country_urls)):
     if isCompeted[i][1] == 'glyphicon-ok':
         countries.append([country_nocs[i], country_urls[i]])
+
+print(countries.index(['NGR', 'http://www.olympedia.org/countries/NGR']))
 
 # 2. Creating a dictionary to know the host city for the Olympics
 # {(year + season): City}
@@ -58,7 +60,7 @@ for idx, country in enumerate(countries):
 
     # 3. Finding all 'athlete_id's in the country while traversing the participation list
     # Each player must be approached after scraping all players from the country without duplication.
-    # This is because the athlete information contains all the athletes' records in the Olympics.
+    # This is because the athlete information contains all the athlete's records in the Olympics.
     athlete_ids = {}
     for result_url in result_urls:
         # 1. Into the result page
@@ -104,7 +106,7 @@ for idx, country in enumerate(countries):
         medal_items = athlete_soup.select('body > div.container > table.table > tbody > tr > td:nth-child(5)')
         medals = [item.get_text() for item in medal_items]
 
-        # 5. Create & insert athlete info
+        # 5. Create & Insert athlete info
         cur_games = ''
         cur_sport = ''
         for i in range(len(games_s)):
