@@ -23,8 +23,6 @@ for i in range(len(country_urls)):
     if isCompeted[i][1] == 'glyphicon-ok':
         countries.append([country_nocs[i], country_urls[i]])
 
-print(countries.index(['NGR', 'http://www.olympedia.org/countries/NGR']))
-
 # 2. Creating a dictionary to know the host city for the Olympics
 # {(year + season): City}
 games_page = requests.get(base_url + '/editions')
